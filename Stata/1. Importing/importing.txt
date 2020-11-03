@@ -1,0 +1,31 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/1. Importing/importing.txt
+  log type:  text
+ opened on:   5 Oct 2020, 11:58:06
+r; t=0.02 11:58:06
+
+. 
+. //SOME INFORMATION ABOUT MENUS
+. 
+. 
+. // # 1. MENU 'File'
+. // # 1.1 "Working directory..."
+.                 capture cd "/Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/1. Importing"
+r; t=0.00 11:58:06
+
+.                 
+.                 clear all
+r; t=0.01 11:58:06
+
+.                 set more off
+r; t=0.00 11:58:06
+
+.                 set rmsg on
+r; t=0.00 11:58:06
+
+.                 
+. // # 1.2 CREATE A LOG FILE, 'Log'
+.         
+.                 capture log close                                               // in the event a log is open, close it, otherwise move to the next line; avoids
+>  the error message in case no log is open

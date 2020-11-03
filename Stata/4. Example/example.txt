@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/4. Example/exa
+> mple.txt
+  log type:  text
+ opened on:  12 Oct 2020, 20:06:54
+r; t=0.00 20:06:54
+
+. ***********************************************************************************************************
+. import excel "/data/Labour.xlsx", sheet("Folha1") firstrow
+file /data/Labour.xlsx not found
+r(601); t=0.14 20:06:54
+
+end of do-file
+
+r(601); t=0.16 20:06:54
+
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01611.000000"
+
+. //////////////////////////////////////////////////////////////////////
+> // Análise e Tratamento de Dados                                                                       //      
+. // Construção e Gestão de Base de Dados                                                              //
+. // Universidade do Minho                                                                                        //
+. //////////////////////////////////////////////////////////////////////
+> 
+. global st = "$S_TIME"                                           // CHECK HOW LONG IT TAKES TO RUN THE FULL PROGRAM
+r; t=0.00 20:07:41
+
+. 
+. clear all                                                                       // CLEAR STATA'S MEMORY; START A NEW SESSION
+r; t=0.00 20:07:41
+
+. 
+. capture cd "/Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/4. Example/lo
+> g"        // MOVE TO YOUR WORKING FOLDER
+r; t=0.00 20:07:41
+
+. 
+. set more off                                                            // ALLOW SCREENS TO PASS BY
+r; t=0.00 20:07:41
+
+. set rmsg on                                                                     // CONTROL THE TIME NEEDED TO RUN EACH COMMAND
+r; t=0.00 20:07:41
+
+. 
+. capture log close                                                       // CLOSE THE LOG IN CASE IT IS OPEN; OTHERWISE PROCEED

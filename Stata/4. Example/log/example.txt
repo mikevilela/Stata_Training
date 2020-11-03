@@ -1,0 +1,376 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/4. Example/log
+> /example.txt
+  log type:  text
+ opened on:  12 Oct 2020, 23:23:28
+r; t=0.00 23:23:28
+
+. ***********************************************************************************************************
+. 
+. // # 1. Import Data
+. 
+. import excel "../data/Labour.xlsx", sheet("Folha1") firstrow //Load the first data
+(11 vars, 308 obs)
+r; t=0.24 23:23:28
+
+. 
+. **Manage Variable
+. 
+.         label var Concelho      "Local Government"
+r; t=0.00 23:23:28
+
+. 
+.         label var Pop_2015      "Population 2015"
+r; t=0.00 23:23:28
+
+.         label var Pop_2016              "Population 2016"
+r; t=0.00 23:23:28
+
+.         label var Pop_2017              "Population 2017"
+r; t=0.00 23:23:28
+
+. 
+. 
+.         label var Pessoal_Constr_2015   "Jobs in Construction 2015"
+r; t=0.00 23:23:28
+
+.         label var Pessoal_Constr_2016   "Jobs in Construction 2016"
+r; t=0.00 23:23:28
+
+.         label var Pessoal_Constr_2017   "Jobs in Construction 2017"
+r; t=0.00 23:23:28
+
+.         
+.         label var pop_empregada_2015    "Jobs Market 2015"
+r; t=0.00 23:23:28
+
+.         label var pop_empregada_2016    "Jobs Market 2016"
+r; t=0.00 23:23:28
+
+.         label var pop_empregada_2017    "Jobs Market 2017"
+r; t=0.00 23:23:28
+
+.         
+. save "../data/data_01.dta", replace
+file ../data/data_01.dta saved
+r; t=0.00 23:23:28
+
+. 
+. clear all
+r; t=0.00 23:23:28
+
+. 
+. /////////////
+> 
+. import excel "../data/Local Finance.xlsx", sheet("Folha1") firstrow //Load the first data
+(17 vars, 308 obs)
+r; t=0.24 23:23:28
+
+. 
+. 
+. **Manage Variable
+. 
+.         label var Concelho      "Local Government"
+r; t=0.00 23:23:28
+
+. 
+.         
+.         label var receita_Capital_2015          "Capital Income 2015"
+r; t=0.00 23:23:28
+
+.         label var receita_Capital_2016          "Capital Income 2016"
+r; t=0.00 23:23:28
+
+.         label var receita_Capital_2017          "Capital Income 2017"
+r; t=0.00 23:23:28
+
+.         
+.         label var Receita_Corrente_2015         "Current Income 2015" 
+r; t=0.00 23:23:28
+
+.         label var Receita_Corrente_2016         "Current Income 2016"  
+r; t=0.00 23:23:28
+
+.         label var Receita_Corrente_2017         "Current Income 2017"  
+r; t=0.00 23:23:28
+
+.         
+.         label var Imposto_Diretos_2015          "Direct Taxes 2015"  
+r; t=0.00 23:23:28
+
+.         label var Imposto_Diretos_2016          "Direct Taxes 2016"  
+r; t=0.00 23:23:28
+
+.         label var Imposto_Diretos_2017          "Direct Taxes 2017" 
+r; t=0.00 23:23:28
+
+.         
+. 
+. rename Q IMT_2017       
+r; t=0.09 23:23:28
+
+.         
+. save "../data/data_02.dta", replace
+file ../data/data_02.dta saved
+r; t=0.00 23:23:28
+
+. 
+. clear all
+r; t=0.00 23:23:28
+
+. 
+. /////////////
+> 
+. import excel "../data/variables.xlsx", sheet("Folha1") firstrow //Load the first data
+(5 vars, 309 obs)
+r; t=0.07 23:23:28
+
+. 
+. 
+. **Manage Variable
+. 
+.         label var Concelho      "Local Government"
+r; t=0.00 23:23:28
+
+. 
+.         
+.         label var Ind_Desenvolvimento_2015              "Development 2015"
+r; t=0.00 23:23:28
+
+.         label var Ind_Desenvolvimento_2016              "Development 2016"
+r; t=0.00 23:23:28
+
+.         label var Ind_Desenvolvimento_2017              "Development 2017"
+r; t=0.00 23:23:28
+
+.         
+.         
+. //Eliminate Duplicates
+. 
+.         duplicates list
+
+Duplicates in terms of all variables
+
+  +---------------------------------------------------------+
+  | obs:   code   Concelho   Ind~2015   Ind~2016   Ind~2017 |
+  |---------------------------------------------------------|
+  |   60   1602    Caminha       1.89       1.95       1.77 |
+  |  309   1602    Caminha       1.89       1.95       1.77 |
+  +---------------------------------------------------------+
+r; t=0.00 23:23:28
+
+.         duplicates drop
+
+Duplicates in terms of all variables
+
+(1 observation deleted)
+r; t=0.00 23:23:28
+
+. 
+.         
+. save "../data/data_03.dta", replace
+file ../data/data_03.dta saved
+r; t=0.00 23:23:28
+
+. 
+. clear all
+r; t=0.00 23:23:28
+
+. 
+. 
+. 
+. // # 2. Merge Data
+. 
+. 
+. use "../data/data_01.dta"
+r; t=0.00 23:23:28
+
+. 
+.         merge 1:1 code using  "../data/data_02.dta"
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                               308  (_merge==3)
+    -----------------------------------------
+r; t=0.00 23:23:28
+
+.                         drop _merge
+r; t=0.00 23:23:28
+
+.                         
+.         merge 1:1 code using  "../data/data_03.dta"     
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                               308  (_merge==3)
+    -----------------------------------------
+r; t=0.00 23:23:28
+
+.                         drop _merge
+r; t=0.00 23:23:28
+
+.         
+. //Converte variables to numeric
+. 
+.  destring Pessoal_Constr_2015 Pessoal_Constr_2016 Pessoal_Constr_2017, replace force dpcomma
+Pessoal_Constr_2015: contains nonnumeric characters; replaced as int
+(11 missing values generated)
+Pessoal_Constr_2016: contains nonnumeric characters; replaced as int
+(5 missing values generated)
+Pessoal_Constr_2017: contains nonnumeric characters; replaced as int
+(4 missing values generated)
+r; t=0.10 23:23:28
+
+.  
+.  
+.  // identify missings in all variables
+. 
+.         egen nmiss = rowmiss(_all)      
+r; t=0.00 23:23:28
+
+.                                         des
+
+Contains data from ../data/data_01.dta
+  obs:           308                          
+ vars:            30                          12 Oct 2020 23:23
+---------------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+---------------------------------------------------------------------------------------------------------------------------------------
+code            int     %10.0g                code
+Concelho        str40   %40s                  Local Government
+Pop_2015        long    %10.0g                Population 2015
+Pop_2016        long    %10.0g                Population 2016
+Pop_2017        long    %10.0g                Population 2017
+Pessoal_Co~2015 int     %10.0g                Jobs in Construction 2015
+Pessoal_Co~2016 int     %10.0g                Jobs in Construction 2016
+Pessoal_Co~2017 int     %10.0g                Jobs in Construction 2017
+pop_empreg~2015 long    %10.0g                Jobs Market 2015
+pop_empreg~2016 long    %10.0g                Jobs Market 2016
+pop_empreg~2017 long    %10.0g                Jobs Market 2017
+receita_Ca~2015 long    %10.0g                Capital Income 2015
+receita_Ca~2016 long    %10.0g                Capital Income 2016
+receita_Ca~2017 long    %10.0g                Capital Income 2017
+Receita_Co~2015 long    %10.0gc               Current Income 2015
+Receita_Co~2016 long    %10.0gc               Current Income 2016
+Receita_Co~2017 long    %10.0gc               Current Income 2017
+Imposto_Di~2015 long    %10.0g                Direct Taxes 2015
+Imposto_Di~2016 long    %10.0g                Direct Taxes 2016
+Imposto_Di~2017 long    %10.0g                Direct Taxes 2017
+IMI_2015        long    %10.0g                IMI_2015
+IMI_2016        long    %10.0g                IMI_2016
+IMI_2017        long    %10.0g                IMI_2017
+IMT_2015        long    %10.0g                IMT_2015
+IMT_2016        long    %10.0g                IMT_2016
+IMT_2017        long    %10.0g                IMT_2016
+Ind_Desenv~2015 double  %10.0g                Development 2015
+Ind_Desenv~2016 double  %10.0g                Development 2016
+Ind_Desenv~2017 double  %10.0g                Development 2017
+nmiss           float   %9.0g                 
+---------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: code
+     Note: Dataset has changed since last saved.
+r; t=0.00 23:23:28
+
+.                                         tab nmiss
+
+      nmiss |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        262       85.06       85.06
+          1 |         12        3.90       88.96
+          2 |          4        1.30       90.26
+          3 |         30        9.74      100.00
+------------+-----------------------------------
+      Total |        308      100.00
+r; t=0.00 23:23:28
+
+.                                                 drop nmiss
+r; t=0.00 23:23:28
+
+.                                                 
+.                                                 
+. save "../data/data_total.dta", replace
+file ../data/data_total.dta saved
+r; t=0.00 23:23:28
+
+. 
+. 
+. 
+. // # 3. Transforme Database
+. 
+. 
+.                  reshape long Pop_ Pessoal_Constr_ pop_empregada_ ///
+>                 receita_Capital_  Receita_Corrente_ ///
+>                   Imposto_Diretos_  IMI_ ///
+>                   IMT_ Ind_Desenvolvimento_, i (Concelho) j (Ano)
+(note: j = 2015 2016 2017)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                      308   ->     924
+Number of variables                  29   ->      12
+j variable (3 values)                     ->   Ano
+xij variables:
+             Pop_2015 Pop_2016 Pop_2017   ->   Pop_
+Pessoal_Constr_2015 Pessoal_Constr_2016 Pessoal_Constr_2017->Pessoal_Constr_
+pop_empregada_2015 pop_empregada_2016 pop_empregada_2017->pop_empregada_
+receita_Capital_2015 receita_Capital_2016 receita_Capital_2017->receita_Capital_
+Receita_Corrente_2015 Receita_Corrente_2016 Receita_Corrente_2017->Receita_Corrente_
+Imposto_Diretos_2015 Imposto_Diretos_2016 Imposto_Diretos_2017->Imposto_Diretos_
+             IMI_2015 IMI_2016 IMI_2017   ->   IMI_
+             IMT_2015 IMT_2016 IMT_2017   ->   IMT_
+Ind_Desenvolvimento_2015 Ind_Desenvolvimento_2016 Ind_Desenvolvimento_2017->Ind_Desenvolvimento_
+-----------------------------------------------------------------------------
+r; t=0.12 23:23:29
+
+.                  
+. // # 4. Create a relative wheigth 
+. 
+. 
+.                         local llist IMI_ IMT_
+r; t=0.00 23:23:29
+
+.                         
+.                         foreach cc of local llist {
+  2.                                 gen r`cc' = `cc'/(Receita_Corrente_+receita_Capital_)
+  3.                                 
+.                         }
+r; t=0.00 23:23:29
+
+. 
+end of do-file
+
+r; t=0.98 23:23:29
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01611.000000"
+
+. preserve
+r; t=0.00 23:23:49
+
+.                                         collapse (mean) rIMI_ rIMT_, by (Ano)
+r; t=0.00 23:23:49
+
+. 
+end of do-file
+
+r; t=0.00 23:23:49
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01611.000000"
+
+.                                         collapse (mean) rIMI_ rIMT_, by (Ano)
+r; t=0.00 23:23:56
+
+.                                         twoway (line rIMI_ rIMT_ Ano)
+r; t=1.77 23:23:58
+
+.                                         graph save test.png, replace 
+(note: file test.png not found)
+(file test.png saved)
+r; t=0.10 23:23:58
+
+. 
+end of do-file
+
+r; t=1.92 23:23:58
+. exit, clear

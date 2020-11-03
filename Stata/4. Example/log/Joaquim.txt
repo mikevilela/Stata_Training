@@ -1,0 +1,58 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/4. Example/log
+> /Joaquim.txt
+  log type:  text
+ opened on:  12 Oct 2020, 22:52:25
+r; t=0.00 22:52:25
+
+. set matsize 800
+set matsize ignored.
+    Matrix sizes are no longer limited by c(matsize) in modern Statas.  Matrix sizes are now limited by flavor of Stata.  See limits
+    for more details.
+r; t=0.00 22:52:25
+
+. 
+. clear all
+r; t=0.05 22:52:25
+
+. ********************************************************************************
+. 
+. use "../Data/vencedor_municipal.dta"
+file ../Data/vencedor_municipal.dta not found
+r(601); t=0.00 22:52:25
+
+end of do-file
+
+r(601); t=0.08 22:52:25
+
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01611.000000"
+
+. /////////////////////////////////////////////////////////////////
+> // Base de dados                                                                                                        //      
+. // Cost Action                                                                                                          //      
+. // Cutback Management                                                                                           //
+. // APDR                                                                                                                         //
+. //////////////////////////////////////////////////////////////////////
+> 
+. 
+. global st = "$S_TIME"                                           // CHECK HOW LONG IT TAKES TO RUN THE FULL PROGRAM
+r; t=0.00 22:52:53
+
+. 
+. clear all                                                                       // CLEAR STATA'S MEMORY; START A NEW SESSION
+r; t=0.00 22:52:53
+
+. 
+. capture cd "/Users/miguel/Dropbox/Orientacoes/_old/Joaquim/Tese Mestrado MAP/Econometria/logs"  // MOVE TO YOUR WORKING FOLDER
+r; t=0.00 22:52:53
+
+. 
+. set more off                                                            // ALLOW SCREENS TO PASS BY
+r; t=0.00 22:52:53
+
+. set rmsg on                                                                     // CONTROL THE TIME NEEDED TO RUN EACH COMMAND
+r; t=0.00 22:52:53
+
+. 
+. capture log close                                                       // CLOSE THE LOG IN CASE IT IS OPEN; OTHERWISE PROCEED

@@ -1,0 +1,631 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/2. Managing/ha
+> ndlingdata_further_commands.txt
+  log type:  text
+ opened on:   5 Oct 2020, 17:28:16
+r; t=0.00 17:28:16
+
+. 
+.         use growth\growth_data, clear
+file growth\growth_data.dta not found
+r(601); t=0.00 17:28:16
+
+end of do-file
+
+r(601); t=0.15 17:28:16
+
+. use "/Users/miguel/Dropbox/Econometrics/eegss_2015/day1/2.handlingdata/growth/growth_data.dta"
+r; t=0.03 17:29:35
+
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. 
+.         // # 1. commands to see and edtir the data
+.         
+.                 //      edit: Edit data with Data Editor                        // be careful: you can damage the data by doing this;
+>  avoid using this command
+.                 //      browse: Browse data with Data Editor
+. 
+.         
+.         // # 2. DISPLAY A GIVEN MESSAGE OR computation: examples
+.         
+.         display 2^3
+8
+r; t=0.07 17:30:03
+
+.         di _new _new "Computation, ln(23) =     " ln(23) _new   // insert 2 blank lines before the display and 1 after
+
+
+Computation, ln(23) =     3.1354942
+
+r; t=0.00 17:30:03
+
+.                 
+.         
+.         // # 3. commands over variables
+.         
+.                 // # 3.1 create a new variabe
+.                         generate education2 = education^2               // generate a new variable with the square of education
+(16 missing values generated)
+r; t=0.00 17:30:03
+
+.                         ge lnpop = ln(pop)                                              // generate a new variable with the log of po
+> pulation
+r; t=0.00 17:30:03
+
+.                                                                                                         // for Stata log = ln; log10 
+> is the log base 10
+. 
+.                         clonevar cty = country                                  // clone existing variable
+r; t=0.01 17:30:03
+
+.                                 compare country cty                                     // compare two variables; in this case they a
+> re the same
+
+                            count
+---------------------------------
+country=cty                   896
+                       ----------
+jointly defined               896
+                       ----------
+total                         896
+r; t=0.00 17:30:03
+
+.                                 compress cty
+  variable cty was str23 now str15
+  (7,168 bytes saved)
+r; t=0.00 17:30:03
+
+.                                 compare country cty
+
+                            count
+---------------------------------
+country=cty                   896
+                       ----------
+jointly defined               896
+                       ----------
+total                         896
+r; t=0.00 17:30:03
+
+.                                 describe cty
+
+              storage   display    value
+variable name   type    format     label      variable label
+---------------------------------------------------------------------------------------------------------------------------------------
+cty             str15   %15s                  Country name
+r; t=0.00 17:30:03
+
+.                                 
+.                                 drop cty                                                        // drop a given variable
+r; t=0.00 17:30:03
+
+. 
+.                 // # 3.2 generate a numeric id for each country
+.                         egen double cty_id = group(country)             // egen: extensions to generate == explore the command with '
+> help egen'; create the variable with double precision
+r; t=0.03 17:30:03
+
+. 
+.                 // # 3.3 alternative that can be used to produce an similar result
+.                         encode country, gen(cty_id2)
+r; t=0.00 17:30:03
+
+.                         tab cty_id2
+
+   Country name |      Freq.     Percent        Cum.
+----------------+-----------------------------------
+    afghanistan |          9        1.00        1.00
+        algeria |          9        1.00        2.01
+      argentina |          9        1.00        3.01
+      australia |          9        1.00        4.02
+        austria |          9        1.00        5.02
+        bahrain |          9        1.00        6.03
+     bangladesh |          9        1.00        7.03
+       barbados |          9        1.00        8.04
+        belgium |          9        1.00        9.04
+         belize |          3        0.33        9.38
+          benin |          9        1.00       10.38
+        bolivia |          9        1.00       11.38
+       botswana |          9        1.00       12.39
+         brazil |          9        1.00       13.39
+         brunei |          3        0.33       13.73
+       bulgaria |          9        1.00       14.73
+        burundi |          1        0.11       14.84
+       cameroon |          9        1.00       15.85
+         canada |          9        1.00       16.85
+          chile |          9        1.00       17.86
+          china |          9        1.00       18.86
+       colombia |          9        1.00       19.87
+     costa rica |          9        1.00       20.87
+        croatia |          3        0.33       21.21
+           cuba |          9        1.00       22.21
+         cyprus |          9        1.00       23.21
+        denmark |          9        1.00       24.22
+       dominica |          2        0.22       24.44
+        ecuador |          9        1.00       25.45
+          egypt |          9        1.00       26.45
+    el salvador |          9        1.00       27.46
+        estonia |          1        0.11       27.57
+       ethiopia |          1        0.11       27.68
+           fiji |          9        1.00       28.68
+        finland |          9        1.00       29.69
+         france |          9        1.00       30.69
+          ghana |          9        1.00       31.70
+         greece |          9        1.00       32.70
+      guatemala |          9        1.00       33.71
+         guyana |          9        1.00       34.71
+          haiti |          9        1.00       35.71
+       honduras |          9        1.00       36.72
+      hong kong |          9        1.00       37.72
+        hungary |          9        1.00       38.73
+        iceland |          9        1.00       39.73
+          india |          9        1.00       40.74
+      indonesia |          9        1.00       41.74
+           iraq |          9        1.00       42.75
+        ireland |          9        1.00       43.75
+         israel |          9        1.00       44.75
+          italy |          9        1.00       45.76
+        jamaica |          9        1.00       46.76
+          japan |          9        1.00       47.77
+         jordan |          9        1.00       48.77
+          kenya |          9        1.00       49.78
+         kuwait |          9        1.00       50.78
+         latvia |          1        0.11       50.89
+        lesotho |          9        1.00       51.90
+        liberia |          9        1.00       52.90
+          libya |          3        0.33       53.24
+      lithuania |          1        0.11       53.35
+         malawi |          9        1.00       54.35
+       malaysia |          9        1.00       55.36
+           mali |          9        1.00       56.36
+          malta |          9        1.00       57.37
+     mauritania |          1        0.11       57.48
+      mauritius |          9        1.00       58.48
+         mexico |          9        1.00       59.49
+        moldova |          1        0.11       59.60
+     mozambique |          9        1.00       60.60
+        namibia |          2        0.22       60.83
+          nepal |          9        1.00       61.83
+    netherlands |          9        1.00       62.83
+    new zealand |          9        1.00       63.84
+      nicaragua |          9        1.00       64.84
+          niger |          9        1.00       65.85
+         norway |          9        1.00       66.85
+       pakistan |          9        1.00       67.86
+         panama |          9        1.00       68.86
+       paraguay |          9        1.00       69.87
+           peru |          9        1.00       70.87
+    philippines |          9        1.00       71.88
+         poland |          9        1.00       72.88
+       portugal |          9        1.00       73.88
+        romania |          9        1.00       74.89
+         rwanda |          9        1.00       75.89
+        senegal |          9        1.00       76.90
+     seychelles |          3        0.33       77.23
+   sierra leone |          9        1.00       78.24
+      singapore |          9        1.00       79.24
+       slovenia |          3        0.33       79.58
+solomon islands |          1        0.11       79.69
+   south africa |          9        1.00       80.69
+          spain |          9        1.00       81.70
+      sri lanka |          9        1.00       82.70
+          sudan |          9        1.00       83.71
+      swaziland |          9        1.00       84.71
+         sweden |          9        1.00       85.71
+    switzerland |          9        1.00       86.72
+          syria |          9        1.00       87.72
+         taiwan |          9        1.00       88.73
+     tajikistan |          1        0.11       88.84
+       thailand |          9        1.00       89.84
+           togo |          9        1.00       90.85
+        tunisia |          9        1.00       91.85
+         turkey |          9        1.00       92.86
+         uganda |          9        1.00       93.86
+ united kingdom |          9        1.00       94.87
+  united states |          9        1.00       95.87
+        uruguay |          9        1.00       96.88
+        vanuatu |          1        0.11       96.99
+      venezuela |          9        1.00       97.99
+         zambia |          9        1.00       99.00
+       zimbabwe |          9        1.00      100.00
+----------------+-----------------------------------
+          Total |        896      100.00
+r; t=0.00 17:30:03
+
+.                         tab cty_id2, nolabel
+
+    Country |
+       name |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |          9        1.00        1.00
+          2 |          9        1.00        2.01
+          3 |          9        1.00        3.01
+          4 |          9        1.00        4.02
+          5 |          9        1.00        5.02
+          6 |          9        1.00        6.03
+          7 |          9        1.00        7.03
+          8 |          9        1.00        8.04
+          9 |          9        1.00        9.04
+         10 |          3        0.33        9.38
+         11 |          9        1.00       10.38
+         12 |          9        1.00       11.38
+         13 |          9        1.00       12.39
+         14 |          9        1.00       13.39
+         15 |          3        0.33       13.73
+         16 |          9        1.00       14.73
+         17 |          1        0.11       14.84
+         18 |          9        1.00       15.85
+         19 |          9        1.00       16.85
+         20 |          9        1.00       17.86
+         21 |          9        1.00       18.86
+         22 |          9        1.00       19.87
+         23 |          9        1.00       20.87
+         24 |          3        0.33       21.21
+         25 |          9        1.00       22.21
+         26 |          9        1.00       23.21
+         27 |          9        1.00       24.22
+         28 |          2        0.22       24.44
+         29 |          9        1.00       25.45
+         30 |          9        1.00       26.45
+         31 |          9        1.00       27.46
+         32 |          1        0.11       27.57
+         33 |          1        0.11       27.68
+         34 |          9        1.00       28.68
+         35 |          9        1.00       29.69
+         36 |          9        1.00       30.69
+         37 |          9        1.00       31.70
+         38 |          9        1.00       32.70
+         39 |          9        1.00       33.71
+         40 |          9        1.00       34.71
+         41 |          9        1.00       35.71
+         42 |          9        1.00       36.72
+         43 |          9        1.00       37.72
+         44 |          9        1.00       38.73
+         45 |          9        1.00       39.73
+         46 |          9        1.00       40.74
+         47 |          9        1.00       41.74
+         48 |          9        1.00       42.75
+         49 |          9        1.00       43.75
+         50 |          9        1.00       44.75
+         51 |          9        1.00       45.76
+         52 |          9        1.00       46.76
+         53 |          9        1.00       47.77
+         54 |          9        1.00       48.77
+         55 |          9        1.00       49.78
+         56 |          9        1.00       50.78
+         57 |          1        0.11       50.89
+         58 |          9        1.00       51.90
+         59 |          9        1.00       52.90
+         60 |          3        0.33       53.24
+         61 |          1        0.11       53.35
+         62 |          9        1.00       54.35
+         63 |          9        1.00       55.36
+         64 |          9        1.00       56.36
+         65 |          9        1.00       57.37
+         66 |          1        0.11       57.48
+         67 |          9        1.00       58.48
+         68 |          9        1.00       59.49
+         69 |          1        0.11       59.60
+         70 |          9        1.00       60.60
+         71 |          2        0.22       60.83
+         72 |          9        1.00       61.83
+         73 |          9        1.00       62.83
+         74 |          9        1.00       63.84
+         75 |          9        1.00       64.84
+         76 |          9        1.00       65.85
+         77 |          9        1.00       66.85
+         78 |          9        1.00       67.86
+         79 |          9        1.00       68.86
+         80 |          9        1.00       69.87
+         81 |          9        1.00       70.87
+         82 |          9        1.00       71.88
+         83 |          9        1.00       72.88
+         84 |          9        1.00       73.88
+         85 |          9        1.00       74.89
+         86 |          9        1.00       75.89
+         87 |          9        1.00       76.90
+         88 |          3        0.33       77.23
+         89 |          9        1.00       78.24
+         90 |          9        1.00       79.24
+         91 |          3        0.33       79.58
+         92 |          1        0.11       79.69
+         93 |          9        1.00       80.69
+         94 |          9        1.00       81.70
+         95 |          9        1.00       82.70
+         96 |          9        1.00       83.71
+         97 |          9        1.00       84.71
+         98 |          9        1.00       85.71
+         99 |          9        1.00       86.72
+        100 |          9        1.00       87.72
+        101 |          9        1.00       88.73
+        102 |          1        0.11       88.84
+        103 |          9        1.00       89.84
+        104 |          9        1.00       90.85
+        105 |          9        1.00       91.85
+        106 |          9        1.00       92.86
+        107 |          9        1.00       93.86
+        108 |          9        1.00       94.87
+        109 |          9        1.00       95.87
+        110 |          9        1.00       96.88
+        111 |          1        0.11       96.99
+        112 |          9        1.00       97.99
+        113 |          9        1.00       99.00
+        114 |          9        1.00      100.00
+------------+-----------------------------------
+      Total |        896      100.00
+r; t=0.00 17:30:03
+
+.                                 compare cty_id cty_id2
+
+                                        ---------- difference ----------
+                            count       minimum      average     maximum
+------------------------------------------------------------------------
+cty_id=cty_id2                896
+                       ----------
+jointly defined               896             0            0           0
+                       ----------
+total                         896
+r; t=0.00 17:30:03
+
+.                         
+.                         decode cty_id2, gen(country2)
+r; t=0.00 17:30:03
+
+.                                 tab country2
+
+   Country name |      Freq.     Percent        Cum.
+----------------+-----------------------------------
+    afghanistan |          9        1.00        1.00
+        algeria |          9        1.00        2.01
+      argentina |          9        1.00        3.01
+      australia |          9        1.00        4.02
+        austria |          9        1.00        5.02
+        bahrain |          9        1.00        6.03
+     bangladesh |          9        1.00        7.03
+       barbados |          9        1.00        8.04
+        belgium |          9        1.00        9.04
+         belize |          3        0.33        9.38
+          benin |          9        1.00       10.38
+        bolivia |          9        1.00       11.38
+       botswana |          9        1.00       12.39
+         brazil |          9        1.00       13.39
+         brunei |          3        0.33       13.73
+       bulgaria |          9        1.00       14.73
+        burundi |          1        0.11       14.84
+       cameroon |          9        1.00       15.85
+         canada |          9        1.00       16.85
+          chile |          9        1.00       17.86
+          china |          9        1.00       18.86
+       colombia |          9        1.00       19.87
+     costa rica |          9        1.00       20.87
+        croatia |          3        0.33       21.21
+           cuba |          9        1.00       22.21
+         cyprus |          9        1.00       23.21
+        denmark |          9        1.00       24.22
+       dominica |          2        0.22       24.44
+        ecuador |          9        1.00       25.45
+          egypt |          9        1.00       26.45
+    el salvador |          9        1.00       27.46
+        estonia |          1        0.11       27.57
+       ethiopia |          1        0.11       27.68
+           fiji |          9        1.00       28.68
+        finland |          9        1.00       29.69
+         france |          9        1.00       30.69
+          ghana |          9        1.00       31.70
+         greece |          9        1.00       32.70
+      guatemala |          9        1.00       33.71
+         guyana |          9        1.00       34.71
+          haiti |          9        1.00       35.71
+       honduras |          9        1.00       36.72
+      hong kong |          9        1.00       37.72
+        hungary |          9        1.00       38.73
+        iceland |          9        1.00       39.73
+          india |          9        1.00       40.74
+      indonesia |          9        1.00       41.74
+           iraq |          9        1.00       42.75
+        ireland |          9        1.00       43.75
+         israel |          9        1.00       44.75
+          italy |          9        1.00       45.76
+        jamaica |          9        1.00       46.76
+          japan |          9        1.00       47.77
+         jordan |          9        1.00       48.77
+          kenya |          9        1.00       49.78
+         kuwait |          9        1.00       50.78
+         latvia |          1        0.11       50.89
+        lesotho |          9        1.00       51.90
+        liberia |          9        1.00       52.90
+          libya |          3        0.33       53.24
+      lithuania |          1        0.11       53.35
+         malawi |          9        1.00       54.35
+       malaysia |          9        1.00       55.36
+           mali |          9        1.00       56.36
+          malta |          9        1.00       57.37
+     mauritania |          1        0.11       57.48
+      mauritius |          9        1.00       58.48
+         mexico |          9        1.00       59.49
+        moldova |          1        0.11       59.60
+     mozambique |          9        1.00       60.60
+        namibia |          2        0.22       60.83
+          nepal |          9        1.00       61.83
+    netherlands |          9        1.00       62.83
+    new zealand |          9        1.00       63.84
+      nicaragua |          9        1.00       64.84
+          niger |          9        1.00       65.85
+         norway |          9        1.00       66.85
+       pakistan |          9        1.00       67.86
+         panama |          9        1.00       68.86
+       paraguay |          9        1.00       69.87
+           peru |          9        1.00       70.87
+    philippines |          9        1.00       71.88
+         poland |          9        1.00       72.88
+       portugal |          9        1.00       73.88
+        romania |          9        1.00       74.89
+         rwanda |          9        1.00       75.89
+        senegal |          9        1.00       76.90
+     seychelles |          3        0.33       77.23
+   sierra leone |          9        1.00       78.24
+      singapore |          9        1.00       79.24
+       slovenia |          3        0.33       79.58
+solomon islands |          1        0.11       79.69
+   south africa |          9        1.00       80.69
+          spain |          9        1.00       81.70
+      sri lanka |          9        1.00       82.70
+          sudan |          9        1.00       83.71
+      swaziland |          9        1.00       84.71
+         sweden |          9        1.00       85.71
+    switzerland |          9        1.00       86.72
+          syria |          9        1.00       87.72
+         taiwan |          9        1.00       88.73
+     tajikistan |          1        0.11       88.84
+       thailand |          9        1.00       89.84
+           togo |          9        1.00       90.85
+        tunisia |          9        1.00       91.85
+         turkey |          9        1.00       92.86
+         uganda |          9        1.00       93.86
+ united kingdom |          9        1.00       94.87
+  united states |          9        1.00       95.87
+        uruguay |          9        1.00       96.88
+        vanuatu |          1        0.11       96.99
+      venezuela |          9        1.00       97.99
+         zambia |          9        1.00       99.00
+       zimbabwe |          9        1.00      100.00
+----------------+-----------------------------------
+          Total |        896      100.00
+r; t=0.00 17:30:03
+
+.                                 compare country country2
+
+                            count
+---------------------------------
+country=country2              896
+                       ----------
+jointly defined               896
+                       ----------
+total                         896
+r; t=0.00 17:30:03
+
+.                                 
+.                 //      # 3.4 type 'help functions'
+.                         
+.                         gen cty_year = cty_id*10000 + year                              // generate a unique code for country + year
+r; t=0.00 17:30:03
+
+.                         gen random = int(runiform()*23)                                 // generate a random variable
+r; t=0.00 17:30:03
+
+.                         bysort country (year): gen num = _n                             // generate sequential id numbers within coun
+> try
+r; t=0.00 17:30:03
+
+.                                 egen total_num = total(num), by(country)        // compute the sum of 'num' within country
+r; t=0.01 17:30:03
+
+.                         bysort country (year): gen rollsum = sum(num)   // computing running sums
+r; t=0.00 17:30:03
+
+.                                 egen nobs = count(year),by(country)                     // count the number of observations within ea
+> ch country
+r; t=0.00 17:30:03
+
+.                         
+.                         order country year num rollsum total_num nobs   // reorder variables in dataset
+r; t=0.00 17:30:03
+
+.                         
+.                 // # 3.5 fl: fast list; useful to list big data sets
+.                         fl country year num rollsum total_num nobs in 1/20, sepby(country)
+
+     +--------------------------------------------------------------------------------------+
+     |                 country         year         num     rollsum    total_~m        nobs |
+     |--------------------------------------------------------------------------------------|
+  1. |             afghanistan         1960           1           1          45           9 |
+  2. |             afghanistan         1965           2           3          45           9 |
+  3. |             afghanistan         1970           3           6          45           9 |
+  4. |             afghanistan         1975           4          10          45           9 |
+  5. |             afghanistan         1980           5          15          45           9 |
+  6. |             afghanistan         1985           6          21          45           9 |
+  7. |             afghanistan         1990           7          28          45           9 |
+  8. |             afghanistan         1995           8          36          45           9 |
+  9. |             afghanistan         2000           9          45          45           9 |
+     |--------------------------------------------------------------------------------------|
+ 10. |                 algeria         1960           1           1          45           9 |
+ 11. |                 algeria         1965           2           3          45           9 |
+ 12. |                 algeria         1970           3           6          45           9 |
+ 13. |                 algeria         1975           4          10          45           9 |
+ 14. |                 algeria         1980           5          15          45           9 |
+ 15. |                 algeria         1985           6          21          45           9 |
+ 16. |                 algeria         1990           7          28          45           9 |
+ 17. |                 algeria         1995           8          36          45           9 |
+ 18. |                 algeria         2000           9          45          45           9 |
+     |--------------------------------------------------------------------------------------|
+ 19. |               argentina         1960           1           1          45           9 |
+ 20. |               argentina         1965           2           3          45           9 |
+     +--------------------------------------------------------------------------------------+
+r; t=0.00 17:30:03
+
+.                         list cty_id in 1/10, clean
+
+       cty_id  
+  1.        1  
+  2.        1  
+  3.        1  
+  4.        1  
+  5.        1  
+  6.        1  
+  7.        1  
+  8.        1  
+  9.        1  
+ 10.        2  
+r; t=0.00 17:30:03
+
+.                         
+.                         order nobs, after(year)
+r; t=0.00 17:30:03
+
+.                         
+.                 // # 3.6 varmanage: Manage variable labels, formats, and other properties
+. 
+.                 // # 3.7 `gsort' arranges observations to be in ascending or descending order
+.                         gsort country -year
+r; t=0.01 17:30:03
+
+. 
+end of do-file
+
+r; t=0.22 17:30:03
+. save "/Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/2. Managing/growth_
+> data.dta"
+file /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/2. Managing/growth_dat
+> a.dta saved
+r; t=0.05 17:30:24
+
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. //////////////////////////////////////////////////////////////////////
+> // Análise e Tratamento de Dados                                                                       //      
+. // Construção e Gestão de Base de Dados                                                              //
+. // Universidade do Minho                                                                                        //
+. //////////////////////////////////////////////////////////////////////
+> 
+. global st = "$S_TIME"                                           // CHECK HOW LONG IT TAKES TO RUN THE FULL PROGRAM
+r; t=0.00 17:31:02
+
+. 
+. clear all                                                                       // CLEAR STATA'S MEMORY; START A NEW SESSION
+r; t=0.11 17:31:02
+
+. 
+. capture cd "/Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/2. Managing" 
+>   // MOVE TO YOUR WORKING FOLDER
+r; t=0.00 17:31:02
+
+. 
+. set more off                                                            // ALLOW SCREENS TO PASS BY
+r; t=0.00 17:31:02
+
+. set rmsg on                                                                     // CONTROL THE TIME NEEDED TO RUN EACH COMMAND
+r; t=0.00 17:31:02
+
+. 
+. capture log close                                                       // CLOSE THE LOG IN CASE IT IS OPEN; OTHERWISE PROCEED

@@ -1,0 +1,365 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/3. Exporting/e
+> xporting.txt
+  log type:  text
+ opened on:   5 Oct 2020, 17:40:12
+r; t=0.00 17:40:12
+
+. ***********************************************************************************************************
+. use "../2. Managing/growth_data.dta"
+r; t=0.00 17:40:12
+
+. 
+. 
+. // ########################################################################### //
+. 
+. 
+. // # 3. GRAPHS
+. 
+.         // dot
+. 
+end of do-file
+
+r; t=0.11 17:40:12
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. 
+. // # 3. GRAPHS
+. 
+.         // dot
+. 
+.                 graph dot (mean) education if (country == "denmark" | country == "portugal" | /*
+>                                 */ country == "united states" | country == "italy" | country == "spain"),over(country, sort((mean) ln
+> gdp))
+r; t=1.95 17:40:42
+
+.                 
+. 
+end of do-file
+
+r; t=1.99 17:40:42
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. 
+.         // whisker plots
+. 
+.                 graph box education if year == 2000
+r; t=1.09 17:40:51
+
+. 
+end of do-file
+
+r; t=1.13 17:40:51
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.         // whisker plots
+. 
+.                 graph box education if year == 2000
+r; t=1.00 17:41:05
+
+. 
+.                 preserve
+r; t=0.00 17:41:05
+
+.                         keep if year == 1960 | year == 2000
+(699 observations deleted)
+r; t=0.00 17:41:05
+
+.                         tab year
+
+    Year of |
+observation |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       1960 |         99       50.25       50.25
+       2000 |         98       49.75      100.00
+------------+-----------------------------------
+      Total |        197      100.00
+r; t=0.00 17:41:05
+
+.                         graph box education, by(year)
+r; t=1.71 17:41:07
+
+.                 restore
+r; t=0.00 17:41:07
+
+. 
+end of do-file
+
+r; t=2.76 17:41:07
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. 
+.                 graph box lngdp if (country == "denmark" | country == "portugal" | /*
+>                                 */ country == "united states" | country == "italy" | country == "spain"),over(country, label(alternat
+> e) sort(education))
+r; t=1.09 17:41:15
+
+. 
+end of do-file
+
+r; t=1.09 17:41:15
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 
+.                 
+.         // scatter
+. 
+.                 graph twoway scatter lngdp education
+r; t=1.11 17:42:08
+
+.                 twoway scatter lngdp education
+r; t=0.92 17:42:08
+
+.                 scatter lngdp education
+r; t=0.95 17:42:09
+
+. 
+end of do-file
+
+r; t=3.02 17:42:09
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 graph twoway scatter lngdp education
+r; t=0.95 17:42:23
+
+. 
+end of do-file
+
+r; t=0.95 17:42:23
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 twoway scatter lngdp education
+r; t=0.96 17:42:33
+
+. 
+end of do-file
+
+r; t=1.00 17:42:33
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 scatter lngdp education
+r; t=0.95 17:42:42
+
+. 
+end of do-file
+
+r; t=1.00 17:42:42
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 scatter lngdp education || lfit lngdp education
+r; t=1.23 17:42:53
+
+. 
+end of do-file
+
+r; t=1.28 17:42:53
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 
+.                 scatter lngdp education || lfit lngdp education
+r; t=1.13 17:43:07
+
+.                         set scheme economist
+r; t=0.00 17:43:07
+
+.                 scatter lngdp education || lfit lngdp education
+r; t=1.57 17:43:08
+
+.                         set scheme s2mono
+r; t=0.00 17:43:08
+
+.                 scatter lngdp education || lfit lngdp education
+r; t=1.35 17:43:10
+
+.                 
+.                 scatter lngdp education || lfit lngdp education, scheme(sj)
+r; t=1.35 17:43:11
+
+.                 scatter lngdp education || lfit lngdp education, scheme(s2color)
+r; t=1.31 17:43:12
+
+.                 
+.                 label var lngdp "Log GDP per worker"
+r; t=0.00 17:43:12
+
+.                 label var education "Education"
+r; t=0.00 17:43:12
+
+. 
+end of do-file
+
+r; t=6.77 17:43:12
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 scatter lngdp education if year == 1960 || lfit lngdp education if year == 1960, scheme(s1mono) xlabel(0(2)12) ylabel
+> (6(1.5)12) /*
+>                                 */ title(Income vs. Education: 1960) saving(inc_educ_60, replace)
+(note: file inc_educ_60.gph not found)
+(file inc_educ_60.gph saved)
+r; t=1.56 17:43:30
+
+.                 
+.                 scatter lngdp education if year == 2000 || lfit lngdp education if year == 2000, scheme(s1mono) xlabel(0(2)12) ylabel
+> (6(1.5)12) /*
+>                                 */ title(Income vs. Education: 2000) saving(inc_educ_00, replace)
+(note: file inc_educ_00.gph not found)
+(file inc_educ_00.gph saved)
+r; t=1.45 17:43:32
+
+. 
+end of do-file
+
+r; t=3.05 17:43:32
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 graph combine inc_educ_60.gph inc_educ_00.gph, note(Source: Own computations.)
+r; t=2.78 17:43:57
+
+.                         graph export inc_educ.png, replace      // APPROPRIATE FOR WORD FILES; open the file 'inc_educ.wmf' with Wind
+> ows Explorer
+(file /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/3. Exporting/inc_educ
+> .png written in PNG format)
+r; t=0.60 17:43:58
+
+.                         graph export inc_educ.png, replace      // APPROPRIATE FOR LATEX FILES
+(file /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/3. Exporting/inc_educ
+> .png written in PNG format)
+r; t=0.39 17:43:58
+
+. 
+end of do-file
+
+r; t=3.81 17:43:58
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. 
+.         // histogram
+. 
+.                 histogram education if year == 2000, normal
+(bin=9, start=.76, width=1.2766667)
+r; t=1.47 17:44:24
+
+.         
+. 
+end of do-file
+
+r; t=1.52 17:44:24
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.         
+.         // pie
+. 
+.                 graph pie rgdpwok if (country == "denmark" | country == "portugal" | country == "united states") & year == 2000, /*
+>                         */ scheme(s2color) over(country) title(Income share among countries) /*
+>                                         */ plabel(1 percent, size(*1.5) color(white) format(%3.1f)) /*
+>                                         */ plabel(2 percent, size(*1.5) color(white) format(%3.1f)) /*
+>                                         */ plabel(3 percent, size(*1.5) color(white) format(%3.1f)) /*
+>                                         */ legend(on) plotregion(lstyle(none))/*
+>                                         */ note("Source: Own computations.")
+r; t=1.17 17:44:31
+
+. 
+end of do-file
+
+r; t=1.22 17:44:31
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                         graph export pie_1.png, replace
+could not find Graph window
+r(693); t=0.08 17:44:41
+
+end of do-file
+
+r(693); t=0.13 17:44:41
+
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+. 
+.                 graph pie rgdpwok if (country == "denmark" | country == "portugal" | country == "united states") & year == 2000, /*
+>                         */ scheme(s2color) over(country) title(Income share among countries) /*
+>                                         */ plabel(1 percent, size(*1.5) color(white) format(%3.1f)) /*
+>                                         */ plabel(2 percent, size(*1.5) color(white) format(%3.1f)) /*
+>                                         */ plabel(3 percent, size(*1.5) color(white) format(%3.1f)) /*
+>                                         */ legend(on) plotregion(lstyle(none))/*
+>                                         */ note("Source: Own computations.")
+r; t=1.03 17:44:49
+
+.                                         
+.                         graph export pie_1.png, replace
+(file /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/3. Exporting/pie_1.pn
+> g written in PNG format)
+r; t=0.34 17:44:49
+
+. 
+.                 graph pie rgdpwok if (country == "denmark" | country == "portugal" | country == "united states") & year == 2000, /*
+>                         */ scheme(s2color) over(country) title(Income share among countries) /*
+>                                         */ plabel(1 name, size(*1.5) color(white)) /*
+>                                         */ plabel(2 name, size(*1.5) color(white)) /*
+>                                         */ plabel(3 name, size(*1.5) color(white)) /*
+>                                         */ legend(off) plotregion(lstyle(none))/*
+>                                         */ note("Source: Own computations.")
+r; t=0.83 17:44:50
+
+.                         
+.                         graph export pie_2.png, replace
+(file /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/3. Exporting/pie_2.pn
+> g written in PNG format)
+r; t=0.34 17:44:50
+
+. 
+end of do-file
+
+r; t=2.60 17:44:50
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 label var year "Year"
+r; t=0.00 17:44:56
+
+.                 sum education if country == "united states" & year == 2000
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   education |          1       12.25           .      12.25      12.25
+r; t=0.00 17:44:56
+
+.                         local yy_us = r(mean) - 1
+r; t=0.00 17:44:56
+
+.                 sum education if country == "portugal" & year == 2000
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+   education |          1        4.91           .       4.91       4.91
+r; t=0.00 17:44:56
+
+.                         local yy_pt = r(mean) - 1
+r; t=0.00 17:44:56
+
+.                 
+. 
+end of do-file
+
+r; t=0.05 17:44:56
+. do "/var/folders/kj/kqtyngc93rgg163lk4pvzkdr0000gp/T//SD01166.000000"
+
+.                 
+.                 twoway (line education year if country == "portugal", c(-)) (line education year if country == "united states",c(l)),
+>  yline(9) xline(1975) xlabel(1960(5)2000)/*
+>                                 */ text(`yy_us' 1990 "United States", placement(e)) text(`yy_pt' 1990 "Portugal", placement(e)) schem
+> e(s2mono) ylabel(2 4 6 9 10 12) legend(off) /*
+>                                 */ note(Source: Own Computations.)
+(note:  named style - not found in class connectstyle, default attributes used)
+invalid point, United States 1990
+r(198); t=0.63 17:45:10
+
+end of do-file
+
+r(198); t=0.69 17:45:10
+
+. h graph dot
+r; t=0.47 18:10:21
+
+. h graph
+r; t=0.39 18:10:48
+

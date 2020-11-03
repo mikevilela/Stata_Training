@@ -1,0 +1,268 @@
+---------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/1. Importing/r
+> ead_data.txt
+  log type:  text
+ opened on:   5 Oct 2020, 15:12:53
+r; t=0.00 15:12:53
+
+.                 
+.                 
+. ///////////////////////////////////////
+> // OPEN A STATA DATA FILE                       //
+. /////////////////////////////////////
+> 
+. 
+. 
+. //   # 1. READ DATA FROM the WEB & SAVE IT IN AS A LOCAL FILE
+. 
+.                 // Import data from an internet archive
+.                         capture use http://www.stata-press.com/data/r12/apple.dta
+r; t=0.62 15:12:53
+
+.                         capture save apple, replace                                     // save the file in Stata data format
+r; t=0.00 15:12:53
+
+.                         
+. // you can complicate things a little
+. 
+. *local URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/"
+. *forvalues month = 1/12 {
+. *   forvalues day = 1/31 {
+. *      local month = string(`month', "%02.0f")
+. *      local day = string(`day', "%02.0f")
+. *      local year = "2020"
+. *     local today = "`month'-`day'-`year'"
+. *      local FileName = "`URL'`today'.csv"
+. *      clear
+. *      capture import delimited "`FileName'"
+. *capture confirm variable ïprovincestate
+. *     if _rc == 0 {
+. *         rename ïprovincestate provincestate
+. *         label variable provincestate "Province/State"
+. *      }
+. *      capture rename province_state provincestate
+. *      capture rename country_region countryregion
+. *      capture rename last_update lastupdate
+. *      capture rename lat latitude
+. *      capture rename long longitude
+. *      generate tempdate = "`today'"
+. *      capture save "`today'", replace
+. *   }
+. *}
+. *clear
+. *forvalues month = 1/12 {
+. *   forvalues day = 1/31 {
+. *      local month = string(`month', "%02.0f")
+. *      local day = string(`day', "%02.0f")
+. *      local year = "2020"
+. *      local today = "`month'-`day'-`year'"
+. *      capture append using "`today'"
+. *   }
+. *}
+. *generate date = date(tempdate, "MDY")
+. *format date %tdNN/DD/CCYY
+. 
+. // Keep SAFE
+. 
+. clear all   
+r; t=0.03 15:12:53
+
+.                         
+.         
+.                 use http://www.stata-press.com/data/r13/abdata.dta, clear       
+r; t=1.55 15:12:55
+
+.                         capture save abdata, replace                                    // save the file in Stata data format
+r; t=0.02 15:12:55
+
+.                         
+. clear all                       
+r; t=0.02 15:12:55
+
+.                         
+. // # 2. READING DATA FROM CSV (comma-separated values) FORMAT
+. //              EXPORT & IMPORT FILES FROM .CVS & EXCEL FILES           
+.                         
+.                         cd csv                                                  // move down one folder
+/Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/1. Importing/csv
+r; t=0.00 15:12:55
+
+.                         
+.                         
+.                 // Read text data created by a spreadsheet; indicate that variables names
+.                         // are in the first row of the data file
+.                         insheet using pwt70_csv_data_file.csv, names clear
+(37 vars, 11,400 obs)
+r; t=0.16 15:12:55
+
+.                                 describe
+
+Contains data
+  obs:        11,400                          
+ vars:            37                          
+---------------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+---------------------------------------------------------------------------------------------------------------------------------------
+country         str24   %24s                  
+isocode         str3    %9s                   
+year            int     %8.0g                 
+pop             float   %9.0g                 POP
+xrat            double  %10.0g                XRAT
+currency_unit   str26   %26s                  Currency_Unit
+ppp             float   %9.0g                 
+tcgdp           float   %9.0g                 
+cgdp            float   %9.0g                 
+cgdp2           float   %9.0g                 
+cda2            float   %9.0g                 
+cc              float   %9.0g                 
+cg              float   %9.0g                 
+ci              float   %9.0g                 
+p               float   %9.0g                 
+p2              float   %9.0g                 
+pc              float   %9.0g                 
+pg              float   %9.0g                 
+pi              float   %9.0g                 
+openc           float   %9.0g                 
+cgnp            float   %9.0g                 
+y               float   %9.0g                 
+y2              float   %9.0g                 
+rgdpl           float   %9.0g                 
+rgdpl2          float   %9.0g                 
+rgdpch          float   %9.0g                 
+kc              float   %9.0g                 
+kg              float   %9.0g                 
+ki              float   %9.0g                 
+openk           float   %9.0g                 
+rgdpeqa         float   %9.0g                 
+rgdpwok         float   %9.0g                 
+rgdpl2wok       float   %9.0g                 
+rgdpl2pe        float   %9.0g                 
+rgdpl2te        float   %9.0g                 
+rgdpl2th        float   %9.0g                 
+rgdptt          float   %9.0g                 
+---------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+     Note: Dataset has changed since last saved.
+r; t=0.00 15:12:55
+
+.                         
+. 
+.                 keep isocode year pop xrat openc rgdpl rgdpwok
+r; t=0.00 15:12:55
+
+. 
+.                 save pwt71_short, replace
+file pwt71_short.dta saved
+r; t=0.00 15:12:55
+
+. 
+.                 // Export in xlsx format
+.                         export excel using "pwt71_short.xlsx", firstrow(variables) replace
+file pwt71_short.xlsx saved
+r; t=0.81 15:12:56
+
+. 
+.                 // Import the xlsx file format
+.                         import excel "pwt71_short.xlsx", sheet("Sheet1") firstrow case(lower) clear
+(7 vars, 11,400 obs)
+r; t=1.18 15:12:57
+
+.                         
+.                         
+. ///////////////////////////////////////
+> // EXPLORE THE DATA                             //
+. /////////////////////////////////////                   
+> 
+.                 // Load the Stata native binary format '.dta'
+.                         use pwt71_short, clear
+r; t=0.00 15:12:57
+
+.                         
+.                         
+.                 describe                        // Describe data in memory
+
+Contains data from pwt71_short.dta
+  obs:        11,400                          
+ vars:             7                          5 Oct 2020 15:12
+---------------------------------------------------------------------------------------------------------------------------------------
+              storage   display    value
+variable name   type    format     label      variable label
+---------------------------------------------------------------------------------------------------------------------------------------
+isocode         str3    %9s                   
+year            int     %8.0g                 
+pop             float   %9.0g                 POP
+xrat            double  %10.0g                XRAT
+openc           float   %9.0g                 
+rgdpl           float   %9.0g                 
+rgdpwok         float   %9.0g                 
+---------------------------------------------------------------------------------------------------------------------------------------
+Sorted by: 
+r; t=0.00 15:12:57
+
+.                 inspect pop                     // Display simple summary of data's attributes
+
+pop:  POP                                       Number of Observations
+---------                              ---------------------------------------
+                                             Total      Integers   Nonintegers
+|  #                         Negative            -             -             -
+|  #                         Zero                -             -             -
+|  #                         Positive       11,398         1,731         9,667
+|  #                                   -----------   -----------   -----------
+|  #                         Total          11,398         1,731         9,667
+|  #   .   .   .   .         Missing             2
++----------------------                -----------
+7.251           1323592                     11,400
+(More than 99 unique values)
+r; t=0.00 15:12:57
+
+.                 ds                                      // Compactly list variable names
+isocode  year     pop      xrat     openc    rgdpl    rgdpwok
+r; t=0.00 15:12:57
+
+.                 summarize                       // Summary statistics
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     isocode |          0
+        year |     11,400      1979.5    17.31886       1950       2009
+         pop |     11,398    28500.27    117008.2      7.251    1323592
+        xrat |     10,163    1.38e+13    1.39e+15   8.88e-23   1.40e+17
+       openc |      8,745    75.48579    49.08691   1.959203   453.4373
+-------------+---------------------------------------------------------
+       rgdpl |      8,725    8265.496    10940.45   117.5953   159144.5
+     rgdpwok |      8,177     19039.9    22837.43   320.2628   312988.9
+r; t=0.00 15:12:57
+
+.                 sum pop, detail         // Additional statistics 
+
+                             POP
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%       35.485          7.251
+ 5%       74.931          7.448
+10%      161.626          7.651       Obs              11,398
+25%     1076.852          7.859       Sum of Wgt.      11,398
+
+50%     4466.236                      Mean           28500.27
+                        Largest       Std. Dev.      117008.2
+75%     13138.53        1317066
+90%     48064.04        1317066       Variance       1.37e+10
+95%     86459.02        1323592       Skewness       7.996088
+99%     735903.8        1323592       Kurtosis        72.4849
+r; t=0.00 15:12:57
+
+. 
+.                 
+. clear all                                                                       // clear the memory at the end of the session to free
+>  resources
+r; t=0.02 15:12:57
+
+. log close                                                                       // CLOSE THE LOG FILE
+      name:  <unnamed>
+       log:  /Users/miguel/Dropbox/Universidade do Minho/Teaching/Mestrado/Unidades Curriculares/Análise de Dados/Stata/1. Importing/r
+> ead_data.txt
+  log type:  text
+ closed on:   5 Oct 2020, 15:12:57
+---------------------------------------------------------------------------------------------------------------------------------------
